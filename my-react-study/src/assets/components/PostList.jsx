@@ -4,9 +4,9 @@ import NewPost from "./NewPost";
 import Post from "./Post";
 import classes from "./PostsList.module.css";
 
-export const PostList = () => {
+export const PostList = ({isPosting, onStopPosting}) => {
 
-  const [modalIsVisible, setModalIsVisible] = useState(true);
+  
   const [author, setAuthor] = useState('');
   const [body, setBody] = useState('');
 
@@ -18,14 +18,10 @@ export const PostList = () => {
     setBody(event.target.value);
   }
 
-  const hideModalHandler = () => {
-    setModalIsVisible(false);
-  }
-
   return (
     <>
-    {modalIsVisible && (<Modal onClose={hideModalHandler}>
-      <NewPost onBodyChange={bodyHandler} onAuthorChange={authorHandler} />
+    {isPosting && (<Modal onClose={onStopPosting}>
+      <NewPost onBodyChange={bodyHandler} onAuthorChange={authorHandler} onCancel={onStopPosting} />
     </Modal>) }
     <div className={classes.posts}>
     <Post author={author} body={body} />
